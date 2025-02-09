@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Лаб9.CarArray">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAACAAAAQBAgAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>CarArray.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Лаб9.Program">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Лаб9.Car">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Лаб9.Car.CarArray" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Сar.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAAAAAAAAAxAAAJQAAAAgAAIIIIAAAAGAAAiA=</HashCode>
+      <FileName>Сar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
