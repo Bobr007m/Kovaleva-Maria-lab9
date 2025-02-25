@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Лаб9
 {
     public class Car
     {
-        //Часть 1
+        // Часть 1
         private double fuelFlow; // Расход топлива в литрах на 100 км
         private double fuelVolume; // Объем топлива в баке в литрах
-                                  
+
         private static int count = 0; // Статическая переменная для подсчета количества созданных объектов
 
         // Конструктор без параметров
@@ -25,12 +21,14 @@ namespace Лаб9
         // Конструктор с параметрами
         public Car(double fuelFlow, double fuelVolume)
         {
-            if (fuelFlow < 0 || fuelVolume < 0)
-                Console.WriteLine("Расход топлива и объем бака не могут быть отрицательными.");
-
-            this.fuelFlow = fuelFlow;
-            this.fuelVolume = fuelVolume;
+            FuelFlow = fuelFlow; // Используем свойство для установки значения
+            FuelVolume = fuelVolume; // Используем свойство для установки значения
             count++;
+        }
+
+        // Третий конструктор (с значениями по умолчанию)
+        public Car(double fuelFlow) : this(fuelFlow, 50) // Объем топлива по умолчанию 50 литров
+        {
         }
 
         // Свойства для доступа к закрытым атрибутам
@@ -40,20 +38,34 @@ namespace Лаб9
             set
             {
                 if (value < 0)
-                    Console.WriteLine ("Расход топлива не может быть отрицательным.");
-                fuelFlow = value;
+                {
+                    Console.WriteLine("Расход топлива не может быть отрицательным. Установлено значение 0.");
+                    fuelFlow = 0;
+                }
+                else
+                {
+                    fuelFlow = value;
+                }
             }
         }
+
         public double FuelVolume
         {
             get { return fuelVolume; }
             set
             {
                 if (value < 0)
-                    Console.WriteLine ("Объем топлива не может быть отрицательным.");
-                fuelVolume = value;
+                {
+                    Console.WriteLine("Объем топлива не может быть отрицательным. Установлено значение 0.");
+                    fuelVolume = 0;
+                }
+                else
+                {
+                    fuelVolume = value;
+                }
             }
         }
+
         // Метод для вывода атрибутов
         public void Display()
         {
@@ -65,6 +77,7 @@ namespace Лаб9
         {
             return count;
         }
+
         // Метод для вычисления оставшегося запаса хода
         public double CalculateRemainingRange()
         {
@@ -77,11 +90,14 @@ namespace Лаб9
         // Статическая функция для вычисления запаса хода
         public static double CalculateRemainingRange(Car car)
         {
+            if (car == null)
+                throw new ArgumentNullException(nameof(car));
+
             return car.CalculateRemainingRange();
         }
-        //Часть 2
-        // Унарные операции
-        public static Car operator ++(Car car)
+    //Часть 2
+    // Унарные операции
+    public static Car operator ++(Car car)
         {
             car.fuelFlow += 0.1;
             return car;

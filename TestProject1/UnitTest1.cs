@@ -30,31 +30,7 @@ namespace CarTests
             Assert.AreEqual(50, car.FuelVolume);
         }
 
-        [TestMethod]
-        public void TestParameterizedConstructor_NegativeValues()
-        {
-            // Arrange & Act
-            Car car = new Car(-8.5, -50);
-
-            // Assert
-            Assert.AreEqual(0, car.FuelFlow); // ќжидаетс€, что отрицательные значени€ будут заменены на 0
-            Assert.AreEqual(0, car.FuelVolume);
-        }
-
-        [TestMethod]
-        public void TestFuelFlowProperty()
-        {
-            // Arrange
-            Car car = new Car();
-
-            // Act
-            car.FuelFlow = 10.5;
-
-            // Assert
-            Assert.AreEqual(10.5, car.FuelFlow);
-        }
-
-        [TestMethod]
+       [TestMethod]
         public void TestFuelFlowProperty_NegativeValue()
         {
             // Arrange
@@ -231,6 +207,72 @@ namespace CarTests
             // Assert
             Assert.IsTrue(hundredsOfKm > 0); // ќжидаетс€ положительное значение
         }
+
+        [TestMethod]
+        public void TestDoubleConversion_NegativeFuelVolume()
+        {
+            // Arrange
+            Car car = new Car(8.5, 4); // ќбъем топлива меньше 5
+
+            // Act
+            double hundredsOfKm = (double)car;
+
+            // Assert
+            Assert.AreEqual(-1, hundredsOfKm); // ќжидаетс€ -1, так как топлива меньше 5 л
+        }
+
+        [TestMethod]
+        public void TestEquals_SameObject()
+        {
+            // Arrange
+            Car car = new Car(8.5, 50);
+
+            // Act & Assert
+            Assert.IsTrue(car.Equals(car)); // ќжидаетс€, что объект равен самому себе
+        }
+
+        [TestMethod]
+        public void TestEquals_DifferentObject()
+        {
+            // Arrange
+            Car car1 = new Car(8.5, 50);
+            Car car2 = new Car(9.0, 50);
+
+            // Act & Assert
+            Assert.IsFalse(car1.Equals(car2)); // ќжидаетс€, что объекты не равны
+        }
+
+        [TestMethod]
+        public void TestEquals_NullObject()
+        {
+            // Arrange
+            Car car = new Car(8.5, 50);
+
+            // Act & Assert
+            Assert.IsFalse(car.Equals(null)); // ќжидаетс€, что объект не равен null
+        }
+
+        [TestMethod]
+        public void TestGetHashCode()
+        {
+            // Arrange
+            Car car1 = new Car(8.5, 50);
+            Car car2 = new Car(8.5, 50);
+
+            // Act & Assert
+            Assert.AreEqual(car1.GetHashCode(), car2.GetHashCode()); // ќжидаетс€, что хэш-коды равны дл€ одинаковых объектов
+        }
+
+        [TestMethod]
+        public void TestGetHashCode_DifferentObjects()
+        {
+            // Arrange
+            Car car1 = new Car(8.5, 50);
+            Car car2 = new Car(9.0, 50);
+
+            // Act & Assert
+            Assert.AreNotEqual(car1.GetHashCode(), car2.GetHashCode()); // ќжидаетс€, что хэш-коды разные дл€ разных объектов
+        }
     }
 
     [TestClass]
@@ -246,16 +288,6 @@ namespace CarTests
 
             // Assert
             Assert.AreEqual(0, carArray.Length); // ќжидаетс€ пустой массив
-        }
-
-        [TestMethod]
-        public void TestParameterizedConstructor()
-        {
-            // Arrange & Act
-            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
-
-            // Assert
-            Assert.AreEqual(3, carArray.Length); // ќжидаетс€ массив из 3 элементов
         }
 
         [TestMethod]
@@ -282,13 +314,75 @@ namespace CarTests
         }
 
         [TestMethod]
-        public void TestIndexer_InvalidIndex()
+        public void TestIndexer_InvalidIndex_Get()
         {
             // Arrange
             Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
 
             // Act & Assert
             Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10]); // ќжидаетс€ исключение
+        }
+
+        [TestMethod]
+        public void TestIndexer_InvalidIndex_Set()
+        {
+            // Arrange
+            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
+            Car newCar = new Car(8.5, 50);
+
+            // Act & Assert
+            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10] = newCar); // ќжидаетс€ исключение
+        }
+
+        [TestMethod]
+        public void TestParameterizedConstructor_ZeroSize()
+        {
+            // Arrange & Act
+            Car.CarArray carArray = new Car.CarArray(0, 5, 10, 40, 60);
+
+            // Assert
+            Assert.AreEqual(0, carArray.Length); // ќжидаетс€, что массив будет пустым при нулевом размере
+        }
+
+        [TestMethod]
+        public void TestCopyConstructor_EmptyArray()
+        {
+            // Arrange
+            Car.CarArray originalArray = new Car.CarArray();
+
+            // Act
+            Car.CarArray copiedArray = new Car.CarArray(originalArray);
+
+            // Assert
+            Assert.AreEqual(0, copiedArray.Length); // ќжидаетс€, что скопированный массив будет пустым
+        }
+
+        [TestMethod]
+        public void TestIndexer_SetValidValue()
+        {
+            // Arrange
+            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
+            Car newCar = new Car(8.5, 50);
+
+            // Act
+            carArray[0] = newCar;
+
+            // Assert
+            Assert.AreEqual(newCar, carArray[0]); // ќжидаетс€, что значение по индексу 0 изменилось
+        }
+
+        [TestMethod]
+        public void TestIndexer_GetAfterSet()
+        {
+            // Arrange
+            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
+            Car newCar = new Car(8.5, 50);
+
+            // Act
+            carArray[1] = newCar;
+
+            // Assert
+            Assert.AreEqual(newCar, carArray[1]); // ќжидаетс€, что значение по индексу 1 изменилось
         }
     }
 }

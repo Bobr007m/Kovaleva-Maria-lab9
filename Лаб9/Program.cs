@@ -107,6 +107,7 @@ namespace Лаб9
 
             return minRangeCar;
         }
+
     }
 }
 
