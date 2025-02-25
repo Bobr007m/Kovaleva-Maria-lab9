@@ -1,13 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Лаб9;
+using Р›Р°Р±9;
 
 namespace CarArrayTests
 {
     [TestClass]
     public class CarArrayTests
     {
-        // Тесты для класса CarArray
-
+        // РўРµСЃС‚С‹ РґР»СЏ РєР»Р°СЃСЃР° CarArray
         [TestMethod]
         public void TestDefaultConstructor()
         {
@@ -15,7 +14,7 @@ namespace CarArrayTests
             CarArray carArray = new CarArray();
 
             // Assert
-            Assert.AreEqual(0, carArray.Length); // Ожидается пустой массив
+            Assert.AreEqual(0, carArray.Length); // РћР¶РёРґР°РµС‚СЃСЏ РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ
         }
 
         [TestMethod]
@@ -25,7 +24,7 @@ namespace CarArrayTests
             CarArray carArray = new CarArray(3, 5, 10, 40, 60);
 
             // Assert
-            Assert.AreEqual(3, carArray.Length); // Ожидается массив из 3 элементов
+            Assert.AreEqual(3, carArray.Length); //  РћР¶РёРґР°РµС‚СЃСЏ РјР°СЃСЃРёРІ РёР· 3 СЌР»РµРјРµРЅС‚РѕРІ
         }
 
         [TestMethod]
@@ -38,7 +37,7 @@ namespace CarArrayTests
             CarArray copiedArray = new CarArray(originalArray);
 
             // Assert
-            Assert.AreEqual(originalArray.Length, copiedArray.Length); // Ожидается, что массивы равны
+            Assert.AreEqual(originalArray.Length, copiedArray.Length); // РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ РјР°СЃСЃРёРІС‹ СЂР°РІРЅС‹
         }
 
         [TestMethod]
@@ -48,7 +47,7 @@ namespace CarArrayTests
             CarArray carArray = new CarArray(3, 5, 10, 40, 60);
 
             // Act & Assert
-            Assert.IsNotNull(carArray[0]); // Ожидается, что элемент существует
+            Assert.IsNotNull(carArray[0]); // РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ СЌР»РµРјРµРЅС‚ СЃСѓС‰РµСЃС‚РІСѓРµС‚
         }
 
         [TestMethod]
@@ -58,7 +57,7 @@ namespace CarArrayTests
             CarArray carArray = new CarArray(3, 5, 10, 40, 60);
 
             // Act & Assert
-            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10]); // Ожидается исключение
+            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10]); //  РћР¶РёРґР°РµС‚СЃСЏ РёСЃРєР»СЋС‡РµРЅРёРµ
         }
 
         [TestMethod]
@@ -69,7 +68,7 @@ namespace CarArrayTests
             Car newCar = new Car(8.5, 50);
 
             // Act & Assert
-            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10] = newCar); // Ожидается исключение
+            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10] = newCar); //  РћР¶РёРґР°РµС‚СЃСЏ РёСЃРєР»СЋС‡РµРЅРёРµ
         }
 
         [TestMethod]
@@ -79,7 +78,7 @@ namespace CarArrayTests
             CarArray carArray = new CarArray(0, 5, 10, 40, 60);
 
             // Assert
-            Assert.AreEqual(0, carArray.Length); // Ожидается, что массив будет пустым при нулевом размере
+            Assert.AreEqual(0, carArray.Length); //  РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ РјР°СЃСЃРёРІ Р±СѓРґРµС‚ РїСѓСЃС‚С‹Рј РїСЂРё РЅСѓР»РµРІРѕРј СЂР°Р·РјРµСЂРµ
         }
 
         [TestMethod]
@@ -89,7 +88,7 @@ namespace CarArrayTests
             CarArray carArray = new CarArray(3, 10, 5, 60, 40); // min > max
 
             // Assert
-            Assert.AreEqual(3, carArray.Length); // Ожидается, что массив будет создан, но значения могут быть некорректными
+            Assert.AreEqual(3, carArray.Length); // РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ РјР°СЃСЃРёРІ Р±СѓРґРµС‚ СЃРѕР·РґР°РЅ, РЅРѕ Р·РЅР°С‡РµРЅРёСЏ РјРѕРіСѓС‚ Р±С‹С‚СЊ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹РјРё
         }
 
         [TestMethod]
@@ -102,7 +101,7 @@ namespace CarArrayTests
             CarArray copiedArray = new CarArray(originalArray);
 
             // Assert
-            Assert.AreEqual(0, copiedArray.Length); // Ожидается, что скопированный массив будет пустым
+            Assert.AreEqual(0, copiedArray.Length); //  РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ СЃРєРѕРїРёСЂРѕРІР°РЅРЅС‹Р№ РјР°СЃСЃРёРІ Р±СѓРґРµС‚ РїСѓСЃС‚С‹Рј
         }
 
         [TestMethod]
@@ -116,7 +115,7 @@ namespace CarArrayTests
             carArray[0] = newCar;
 
             // Assert
-            Assert.AreEqual(newCar, carArray[0]); // Ожидается, что значение по индексу 0 изменилось
+            Assert.AreEqual(newCar, carArray[0]); // РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ Р·РЅР°С‡РµРЅРёРµ РїРѕ РёРЅРґРµРєСЃСѓ 0 РёР·РјРµРЅРёР»РѕСЃСЊ
         }
 
         [TestMethod]
@@ -130,7 +129,7 @@ namespace CarArrayTests
             carArray[1] = newCar;
 
             // Assert
-            Assert.AreEqual(newCar, carArray[1]); // Ожидается, что значение по индексу 1 изменилось
+            Assert.AreEqual(newCar, carArray[1]); // РћР¶РёРґР°РµС‚СЃСЏ, С‡С‚Рѕ Р·РЅР°С‡РµРЅРёРµ РїРѕ РёРЅРґРµРєСЃСѓ 1 РёР·РјРµРЅРёР»РѕСЃСЊ
         }
     }
 }
