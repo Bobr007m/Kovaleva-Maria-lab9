@@ -8,15 +8,7 @@ namespace CarArrayTests
     {
         // Тесты для класса CarArray
 
-        [TestMethod]
-        public void TestDefaultConstructor()
-        {
-            // Arrange & Act
-            CarArray carArray = new CarArray();
-
-            // Assert
-            Assert.AreEqual(0, carArray.Length); // Ожидается пустой массив
-        }
+       
 
         [TestMethod]
         public void TestParameterizedConstructor()
@@ -92,18 +84,7 @@ namespace CarArrayTests
             Assert.AreEqual(3, carArray.Length); // Ожидается, что массив будет создан, но значения могут быть некорректными
         }
 
-        [TestMethod]
-        public void TestCopyConstructor_EmptyArray()
-        {
-            // Arrange
-            CarArray originalArray = new CarArray();
-
-            // Act
-            CarArray copiedArray = new CarArray(originalArray);
-
-            // Assert
-            Assert.AreEqual(0, copiedArray.Length); // Ожидается, что скопированный массив будет пустым
-        }
+        
 
         [TestMethod]
         public void TestIndexer_SetValidValue()

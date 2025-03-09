@@ -59,33 +59,28 @@ namespace Лаб9
             Console.WriteLine($"car3 != car4: {car3 != car4}");
             //Часть 3
             // Создание массива вручную
-            Car.CarArray manualArray = new Car.CarArray(3, 5, 10, 40, 60);
-            Console.WriteLine("Массив, созданный вручную:");
-            manualArray.Display();
-            // Создание массива случайной генерацией
-            Car.CarArray randomArray = new Car.CarArray(5, 6, 12, 30, 50);
-            Console.WriteLine("Массив, созданный случайной генерацией:");
-            randomArray.Display();
-            // Создание копии массива
-            Car.CarArray copiedArray = new Car.CarArray(randomArray);
-            Console.WriteLine("Копия массива:");
-            copiedArray.Display();
-            // Демонстрация индексатора
-            try
-            {
-                Console.WriteLine("Элемент с индексом 2:");
-                copiedArray[2].Display();
+            CarArray manualArray = new CarArray(3);
+            manualArray[0] = new Car(5, 40);
+            manualArray[1] = new Car(6, 50);
+            manualArray[2] = new Car(7, 60);
 
-                Console.WriteLine("Попытка доступа к несуществующему индексу:");
-                copiedArray[10].Display();
-            }
-            catch (IndexOutOfRangeException ex)
+            // Демонстрация обращения к индексатору по метке set
+            manualArray[1] = new Car(8, 70); // Использование индексатора для установки значения
+
+            // Демонстрация использования функции FindCarWithMinRange
+            Car carWithMinRange = manualArray.FindCarWithMinRange();
+            if (carWithMinRange != null)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Автомобиль с минимальным запасом хода:");
+                carWithMinRange.Display();
             }
+
+            // Вывод всех автомобилей
+            manualArray.Display();
+            
             // Подсчет количества созданных объектов и коллекций
             Console.WriteLine($"Количество созданных объектов: {Car.GetCount()}");
-            Console.WriteLine($"Количество созданных коллекций: {Car.CarArray.GetCollectionCount()}");
+           
         Console.ReadLine();
         }
 

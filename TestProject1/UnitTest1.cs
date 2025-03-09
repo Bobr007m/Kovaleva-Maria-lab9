@@ -1,388 +1,117 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Лаб9;
 
-namespace CarTests
+[TestClass]
+public class CarTests
 {
-    [TestClass]
-    public class CarTests
+    [TestMethod]
+    public void Constructor_Default_InitializesCorrectly()
     {
-        // Тесты для класса Car
-
-        [TestMethod]
-        public void TestDefaultConstructor()
-        {
-            // Arrange & Act
-            Car car = new Car();
-
-            // Assert
-            Assert.AreEqual(0, car.FuelFlow);
-            Assert.AreEqual(0, car.FuelVolume);
-        }
-
-        [TestMethod]
-        public void TestParameterizedConstructor()
-        {
-            // Arrange & Act
-            Car car = new Car(8.5, 50);
-
-            // Assert
-            Assert.AreEqual(8.5, car.FuelFlow);
-            Assert.AreEqual(50, car.FuelVolume);
-        }
-
-       [TestMethod]
-        public void TestFuelFlowProperty_NegativeValue()
-        {
-            // Arrange
-            Car car = new Car();
-
-            // Act
-            car.FuelFlow = -10.5;
-
-            // Assert
-            Assert.AreEqual(0, car.FuelFlow); // Ожидается, что отрицательное значение будет заменено на 0
-        }
-
-        [TestMethod]
-        public void TestFuelVolumeProperty()
-        {
-            // Arrange
-            Car car = new Car();
-
-            // Act
-            car.FuelVolume = 60;
-
-            // Assert
-            Assert.AreEqual(60, car.FuelVolume);
-        }
-
-        [TestMethod]
-        public void TestFuelVolumeProperty_NegativeValue()
-        {
-            // Arrange
-            Car car = new Car();
-
-            // Act
-            car.FuelVolume = -60;
-
-            // Assert
-            Assert.AreEqual(0, car.FuelVolume); // Ожидается, что отрицательное значение будет заменено на 0
-        }
-
-        [TestMethod]
-        public void TestCalculateRemainingRange_ZeroFuelFlow()
-        {
-            // Arrange
-            Car car = new Car(0, 50);
-
-            // Act
-            double range = car.CalculateRemainingRange();
-
-            // Assert
-            Assert.AreEqual(0, range); // Если расход топлива равен 0, запас хода должен быть 0
-        }
-
-        [TestMethod]
-        public void TestCalculateRemainingRange_NormalCase()
-        {
-            // Arrange
-            Car car = new Car(10, 50);
-
-            // Act
-            double range = car.CalculateRemainingRange();
-
-            // Assert
-            Assert.AreEqual(500, range); // 50 / 10 * 100 = 500 км
-        }
-
-        [TestMethod]
-        public void TestIncrementOperator()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act
-            car++;
-
-            // Assert
-            Assert.AreEqual(8.6, car.FuelFlow); // Расход топлива увеличивается на 0.1
-        }
-
-        [TestMethod]
-        public void TestDecrementOperator()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act
-            car--;
-
-            // Assert
-            Assert.AreEqual(49, car.FuelVolume); // Объем топлива уменьшается на 1
-        }
-
-        [TestMethod]
-        public void TestAdditionOperator()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act
-            Car newCar = car + 10;
-
-            // Assert
-            Assert.AreEqual(60, newCar.FuelVolume); // Объем топлива увеличивается на 10
-        }
-
-        [TestMethod]
-        public void TestAdditionOperator_WithNegativeValue()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act
-            Car newCar = car + (-10);
-
-            // Assert
-            Assert.AreEqual(40, newCar.FuelVolume); // Объем топлива уменьшается на 10
-        }
-
-        [TestMethod]
-        public void TestEqualityOperator()
-        {
-            // Arrange
-            Car car1 = new Car(8.5, 50);
-            Car car2 = new Car(8.5, 50);
-
-            // Act & Assert
-            Assert.IsTrue(car1 == car2); // Ожидается, что объекты равны
-        }
-
-        [TestMethod]
-        public void TestInequalityOperator()
-        {
-            // Arrange
-            Car car1 = new Car(8.5, 50);
-            Car car2 = new Car(9.0, 50);
-
-            // Act & Assert
-            Assert.IsTrue(car1 != car2); // Ожидается, что объекты не равны
-        }
-
-        [TestMethod]
-        public void TestBoolConversion_True()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act
-            bool canReach = (bool)car;
-
-            // Assert
-            Assert.IsTrue(canReach); // Ожидается, что автомобиль может доехать до заправки
-        }
-
-        [TestMethod]
-        public void TestBoolConversion_False()
-        {
-            // Arrange
-            Car car = new Car(8.5, 4); // Объем топлива меньше 5
-
-            // Act
-            bool canReach = (bool)car;
-
-            // Assert
-            Assert.IsFalse(canReach); // Ожидается, что автомобиль не может доехать до заправки
-        }
-
-        [TestMethod]
-        public void TestDoubleConversion()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act
-            double hundredsOfKm = (double)car;
-
-            // Assert
-            Assert.IsTrue(hundredsOfKm > 0); // Ожидается положительное значение
-        }
-
-        [TestMethod]
-        public void TestDoubleConversion_NegativeFuelVolume()
-        {
-            // Arrange
-            Car car = new Car(8.5, 4); // Объем топлива меньше 5
-
-            // Act
-            double hundredsOfKm = (double)car;
-
-            // Assert
-            Assert.AreEqual(-1, hundredsOfKm); // Ожидается -1, так как топлива меньше 5 л
-        }
-
-        [TestMethod]
-        public void TestEquals_SameObject()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act & Assert
-            Assert.IsTrue(car.Equals(car)); // Ожидается, что объект равен самому себе
-        }
-
-        [TestMethod]
-        public void TestEquals_DifferentObject()
-        {
-            // Arrange
-            Car car1 = new Car(8.5, 50);
-            Car car2 = new Car(9.0, 50);
-
-            // Act & Assert
-            Assert.IsFalse(car1.Equals(car2)); // Ожидается, что объекты не равны
-        }
-
-        [TestMethod]
-        public void TestEquals_NullObject()
-        {
-            // Arrange
-            Car car = new Car(8.5, 50);
-
-            // Act & Assert
-            Assert.IsFalse(car.Equals(null)); // Ожидается, что объект не равен null
-        }
-
-        [TestMethod]
-        public void TestGetHashCode()
-        {
-            // Arrange
-            Car car1 = new Car(8.5, 50);
-            Car car2 = new Car(8.5, 50);
-
-            // Act & Assert
-            Assert.AreEqual(car1.GetHashCode(), car2.GetHashCode()); // Ожидается, что хэш-коды равны для одинаковых объектов
-        }
-
-        [TestMethod]
-        public void TestGetHashCode_DifferentObjects()
-        {
-            // Arrange
-            Car car1 = new Car(8.5, 50);
-            Car car2 = new Car(9.0, 50);
-
-            // Act & Assert
-            Assert.AreNotEqual(car1.GetHashCode(), car2.GetHashCode()); // Ожидается, что хэш-коды разные для разных объектов
-        }
+        var car = new Car();
+        Assert.AreEqual(0, car.FuelFlow);
+        Assert.AreEqual(0, car.FuelVolume);
     }
 
-    [TestClass]
-    public class CarArrayTests
+    [TestMethod]
+    public void Constructor_WithParameters_InitializesCorrectly()
     {
-        // Тесты для класса CarArray
+        var car = new Car(10, 50);
+        Assert.AreEqual(10, car.FuelFlow);
+        Assert.AreEqual(50, car.FuelVolume);
+    }
 
-        [TestMethod]
-        public void TestDefaultConstructor()
-        {
-            // Arrange & Act
-            Car.CarArray carArray = new Car.CarArray();
+    [TestMethod]
+    public void Constructor_WithDefaultFuelVolume_InitializesCorrectly()
+    {
+        var car = new Car(10);
+        Assert.AreEqual(10, car.FuelFlow);
+        Assert.AreEqual(50, car.FuelVolume); // По умолчанию 50 литров
+    }
+    [TestMethod]
+    public void FuelFlow_SetNegativeValue_SetsToZero()
+    {
+        var car = new Car();
+        car.FuelFlow = -10;
+        Assert.AreEqual(0, car.FuelFlow);
+    }
 
-            // Assert
-            Assert.AreEqual(0, carArray.Length); // Ожидается пустой массив
-        }
+    [TestMethod]
+    public void FuelVolume_SetNegativeValue_SetsToZero()
+    {
+        var car = new Car();
+        car.FuelVolume = -20;
+        Assert.AreEqual(0, car.FuelVolume);
+    }
+    [TestMethod]
+    public void CalculateRemainingRange_WithZeroFuelFlow_ReturnsZero()
+    {
+        var car = new Car(0, 50);
+        Assert.AreEqual(0, car.CalculateRemainingRange());
+    }
 
-        [TestMethod]
-        public void TestCopyConstructor()
-        {
-            // Arrange
-            Car.CarArray originalArray = new Car.CarArray(3, 5, 10, 40, 60);
+    [TestMethod]
+    public void CalculateRemainingRange_WithPositiveValues_ReturnsCorrectRange()
+    {
+        var car = new Car(10, 50);
+        Assert.AreEqual(500, car.CalculateRemainingRange());
+    }
+    [TestMethod]
+    public void OperatorIncrement_IncreasesFuelVolumeByOne()
+    {
+        var car = new Car(10, 50);
+        car++;
+        Assert.AreEqual(51, car.FuelVolume);
+    }
 
-            // Act
-            Car.CarArray copiedArray = new Car.CarArray(originalArray);
+    [TestMethod]
+    public void OperatorDecrement_DecreasesFuelVolumeByOne()
+    {
+        var car = new Car(10, 50);
+        car--;
+        Assert.AreEqual(49, car.FuelVolume);
+    }
 
-            // Assert
-            Assert.AreEqual(originalArray.Length, copiedArray.Length); // Ожидается, что массивы равны
-        }
+    [TestMethod]
+    public void OperatorDecrement_DoesNotDecreaseBelowZero()
+    {
+        var car = new Car(10, 0);
+        car--;
+        Assert.AreEqual(0, car.FuelVolume);
+    }
+    [TestMethod]
+    public void ExplicitOperatorBool_WithPositiveRange_ReturnsTrue()
+    {
+        var car = new Car(10, 50);
+        Assert.IsTrue((bool)car);
+    }
 
-        [TestMethod]
-        public void TestIndexer_ValidIndex()
-        {
-            // Arrange
-            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
+    [TestMethod]
+    public void ExplicitOperatorBool_WithZeroRange_ReturnsFalse()
+    {
+        var car = new Car(10, 0);
+        Assert.IsFalse((bool)car);
+    }
 
-            // Act & Assert
-            Assert.IsNotNull(carArray[0]); // Ожидается, что элемент существует
-        }
+    [TestMethod]
+    public void ImplicitOperatorDouble_ReturnsRemainingRange()
+    {
+        var car = new Car(10, 50);
+        double range = car;
+        Assert.AreEqual(500, range);
+    }
+    [TestMethod]
+    public void OperatorPlus_AddsFuelVolume()
+    {
+        var car = new Car(10, 50);
+        car = car + 10;
+        Assert.AreEqual(60, car.FuelVolume);
+    }
 
-        [TestMethod]
-        public void TestIndexer_InvalidIndex_Get()
-        {
-            // Arrange
-            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
-
-            // Act & Assert
-            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10]); // Ожидается исключение
-        }
-
-        [TestMethod]
-        public void TestIndexer_InvalidIndex_Set()
-        {
-            // Arrange
-            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
-            Car newCar = new Car(8.5, 50);
-
-            // Act & Assert
-            Assert.ThrowsException<IndexOutOfRangeException>(() => carArray[10] = newCar); // Ожидается исключение
-        }
-
-        [TestMethod]
-        public void TestParameterizedConstructor_ZeroSize()
-        {
-            // Arrange & Act
-            Car.CarArray carArray = new Car.CarArray(0, 5, 10, 40, 60);
-
-            // Assert
-            Assert.AreEqual(0, carArray.Length); // Ожидается, что массив будет пустым при нулевом размере
-        }
-
-        [TestMethod]
-        public void TestCopyConstructor_EmptyArray()
-        {
-            // Arrange
-            Car.CarArray originalArray = new Car.CarArray();
-
-            // Act
-            Car.CarArray copiedArray = new Car.CarArray(originalArray);
-
-            // Assert
-            Assert.AreEqual(0, copiedArray.Length); // Ожидается, что скопированный массив будет пустым
-        }
-
-        [TestMethod]
-        public void TestIndexer_SetValidValue()
-        {
-            // Arrange
-            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
-            Car newCar = new Car(8.5, 50);
-
-            // Act
-            carArray[0] = newCar;
-
-            // Assert
-            Assert.AreEqual(newCar, carArray[0]); // Ожидается, что значение по индексу 0 изменилось
-        }
-
-        [TestMethod]
-        public void TestIndexer_GetAfterSet()
-        {
-            // Arrange
-            Car.CarArray carArray = new Car.CarArray(3, 5, 10, 40, 60);
-            Car newCar = new Car(8.5, 50);
-
-            // Act
-            carArray[1] = newCar;
-
-            // Assert
-            Assert.AreEqual(newCar, carArray[1]); // Ожидается, что значение по индексу 1 изменилось
-        }
+    [TestMethod]
+    public void OperatorPlus_AddsFuelVolume_Commutative()
+    {
+        var car = new Car(10, 50);
+        car = 10 + car;
+        Assert.AreEqual(60, car.FuelVolume);
     }
 }
