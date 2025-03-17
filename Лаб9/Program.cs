@@ -14,13 +14,22 @@ namespace Лаб9
         static void Main(string[] args)
         {
             // Часть 1
+            // Пример использования
+            // Подсчет количества созданных объектов
+            Console.WriteLine($"Количество созданных автомобилей: {Car.GetCount()}"); // 3
             // Создание объектов класса Car
             Car car1 = new Car();
             Car car2 = new Car(8.5, 50);
+            Car car3 = new Car(8); // Третий конструктор (с объемом топлива по умолчанию)
+                                   // Установка некорректных значений через свойства
+            car3.FuelFlow = -5; // Расход топлива не может быть отрицательным. Установлено значение 0.
+            car3.FuelVolume = -10; // Объем топлива не может быть отрицательным. Установлено значение 0.
+            car3.Display(); // Расход топлива: 0 л/100 км, Объем топлива: 0 л
 
             // Вывод информации о созданных объектах
             car1.Display();
             car2.Display();
+            car3.Display(); // Расход топлива: 8 л/100 км, Объем топлива: 50 л
 
             // Демонстрация работы статической и нестатической функций
             Console.WriteLine($"Запас хода car1: {car1.CalculateRemainingRange()} км");
@@ -30,79 +39,103 @@ namespace Лаб9
             Console.WriteLine($"Количество созданных объектов: {Car.GetCount()}");
             //Часть 2
             // Создание объектов
-            Car car3 = new Car(8.5, 50);
             Car car4 = new Car(8.5, 50);
+            Car car5 = new Car(8.5, 50);
 
             // Демонстрация перегруженных операций
-            car1++;
-            car2--;
+            car4++;
+            car5--;
 
-            Console.WriteLine($"car3 после ++: Расход топлива: {car3.FuelFlow} л/100 км");
-            Console.WriteLine($"car4 после --: Объем топлива: {car4.FuelVolume} л");
+            Console.WriteLine($"car3 после ++: Расход топлива: {car4.FuelFlow} л/100 км");
+            Console.WriteLine($"car4 после --: Объем топлива: {car5.FuelVolume} л");
 
             // Операции приведения типа
-            bool canReachGasStation = (bool)car1;
-            double hundredsOfKm = (double)car1;
+            bool canReachGasStation = (bool)car4;
+            double hundredsOfKm = (double)car4;
 
-            Console.WriteLine($"Может ли car1 доехать до заправки: {canReachGasStation}");
-            Console.WriteLine($"Сотни км до заправки для car1: {hundredsOfKm}");
+            Console.WriteLine($"Может ли car4 доехать до заправки: {canReachGasStation}");
+            Console.WriteLine($"Сотни км до заправки для car4: {hundredsOfKm}");
 
             // Бинарные операции
-            Car car5 = car3 + 10;
-            Car car6 = 0.5 + car4;
+            car4 = car4 + 10;
+            car5 = 0.5 + car5;
 
-            Console.WriteLine($"car5 после добавления топлива: Объем топлива: {car5.FuelVolume} л");
-            Console.WriteLine($"car6 после уменьшения расхода: Расход топлива: {car6.FuelFlow} л/100 км");
+            Console.WriteLine($"car5 после добавления топлива: Объем топлива: {car4.FuelVolume} л");
+            Console.WriteLine($"car6 после уменьшения расхода: Расход топлива: {car5.FuelFlow} л/100 км");
 
             // Сравнение объектов
-            Console.WriteLine($"car3 == car4: {car3 == car4}");
-            Console.WriteLine($"car3 != car4: {car3 != car4}");
+            Console.WriteLine($"car1 == car2: {car4 == car5}");
+            Console.WriteLine($"car1 != car2: {car4 != car5}");
             //Часть 3
             // Создание массива вручную
-            CarArray manualArray = new CarArray(3);
-            manualArray[0] = new Car(5, 40);
-            manualArray[1] = new Car(6, 50);
-            manualArray[2] = new Car(7, 60);
-
-            // Демонстрация обращения к индексатору по метке set
-            manualArray[1] = new Car(8, 70); // Использование индексатора для установки значения
-
-            // Демонстрация использования функции FindCarWithMinRange
-            Car carWithMinRange = manualArray.FindCarWithMinRange();
-            if (carWithMinRange != null)
+            try
             {
-                Console.WriteLine("Автомобиль с минимальным запасом хода:");
-                carWithMinRange.Display();
-            }
+                // Запрашиваем у пользователя количество автомобилей
+                Console.Write("Введите количество автомобилей: ");
+                int count = int.Parse(Console.ReadLine());
 
-            // Вывод всех автомобилей
-            manualArray.Display();
-            
-            // Подсчет количества созданных объектов и коллекций
-            Console.WriteLine($"Количество созданных объектов: {Car.GetCount()}");
-           
-        Console.ReadLine();
-        }
+                // Создаем массив автомобилей
+                CarArray manualArray = new CarArray(count);
 
-        // Функция для поиска автомобиля с наименьшим запасом хода
-        static Car FindCarWithMinRange(CarArray carArray)
-        {
-            Car minRangeCar = null;
-            double minRange = double.MaxValue;
-
-            for (int i = 0; i < carArray.Length; i++)
-            {
-                double range = carArray[i].CalculateRemainingRange();
-                if (range < minRange)
+                // Заполняем массив вручную
+                for (int i = 0; i < count; i++)
                 {
-                    minRange = range;
-                    minRangeCar = carArray[i];
+                    Console.WriteLine($"\nВведите данные для автомобиля {i + 1}:");
+
+                    double fuelFlow, fuelVolume;
+
+                    // Ввод расхода топлива
+                    while (true)
+                    {
+                        Console.Write("Введите расход топлива (л/100 км): ");
+                        if (double.TryParse(Console.ReadLine(), out fuelFlow) && fuelFlow > 0)
+                            break;
+                        Console.WriteLine("Некорректный ввод. Пожалуйста, введите положительное число.");
+                    }
+
+                    // Ввод объема топлива
+                    while (true)
+                    {
+                        Console.Write("Введите объем топлива (л): ");
+                        if (double.TryParse(Console.ReadLine(), out fuelVolume) && fuelVolume > 0)
+                            break;
+                        Console.WriteLine("Некорректный ввод. Пожалуйста, введите положительное число.");
+                    }
+
+                    // Создаем объект Car и добавляем его в массив
+                    manualArray[i] = new Car(fuelFlow, fuelVolume);
                 }
+
+                // Демонстрация обращения к индексатору по метке set
+                Console.WriteLine("\nДемонстрация изменения элемента массива через индексатор:");
+                manualArray[1] = new Car(8, 70); // Изменяем второй элемент массива
+                Console.WriteLine("Элемент массива изменен.");
+
+                // Демонстрация использования функции FindCarWithMinRange
+                Console.WriteLine("\nПоиск автомобиля с минимальным запасом хода:");
+                Car carWithMinRange = manualArray.FindCarWithMinRange();
+                if (carWithMinRange != null)
+                {
+                    Console.WriteLine("Автомобиль с минимальным запасом хода:");
+                    carWithMinRange.Display();
+                }
+                else
+                {
+                    Console.WriteLine("Массив пуст.");
+                }
+
+                // Вывод всех автомобилей
+                Console.WriteLine("\nСписок всех автомобилей:");
+                manualArray.Display();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Произошла ошибка: {ex.Message}");
             }
 
-            return minRangeCar;
+            Console.ReadLine();
         }
-
     }
 }
+
 

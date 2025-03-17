@@ -119,8 +119,105 @@ public class CarTests
 public class CarArrayTests
 {
     // Тесты для класса CarArray
+    [TestMethod]
+    public void Constructor_Default_InitializesEmptyArray()
+    {
+        var carArray = new CarArray(0);
+        Assert.AreEqual(0, carArray.Length);
+    }
 
+    [TestMethod]
+    public void Constructor_WithParameters_InitializesArrayWithRandomValues()
+    {
+        var carArray = new CarArray(3, 5, 10, 40, 60);
+        Assert.AreEqual(3, carArray.Length);
+    }
 
+    [TestMethod]
+    public void Constructor_Copy_InitializesArrayWithSameValues()
+    {
+        var originalArray = new CarArray(2, 5, 10, 40, 60);
+        var copiedArray = new CarArray(originalArray);
+        Assert.AreEqual(originalArray.Length, copiedArray.Length);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Constructor_Copy_WithNull_ThrowsException()
+    {
+        var copiedArray = new CarArray(null);
+    }
+    [TestMethod]
+    public void Indexer_GetAndSet_WorksCorrectly()
+    {
+        var carArray = new CarArray(2, 5, 10, 40, 60);
+        var newCar = new Car(8, 70);
+        carArray[1] = newCar;
+        Assert.AreEqual(newCar, carArray[1]);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(IndexOutOfRangeException))]
+    public void Indexer_GetOutOfRange_ThrowsException()
+    {
+        var carArray = new CarArray(2, 5, 10, 40, 60);
+        var car = carArray[3]; // Должно выбросить исключение
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(IndexOutOfRangeException))]
+    public void Indexer_SetOutOfRange_ThrowsException()
+    {
+        var carArray = new CarArray(2, 5, 10, 40, 60);
+        carArray[3] = new Car(8, 70); // Должно выбросить исключение
+    }
+    [TestMethod]
+    public void Display_OutputsCorrectInformation()
+    {
+        var carArray = new CarArray(2, 5, 10, 40, 60);
+        using (var sw = new StringWriter())
+        {
+            Console.SetOut(sw);
+            carArray.Display();
+            var result = sw.ToString().Trim();
+            Assert.IsTrue(result.Contains("Автомобиль 1:"));
+            Assert.IsTrue(result.Contains("Автомобиль 2:"));
+        }
+    }
+
+    [TestMethod]
+    public void FindCarWithMinRange_EmptyArray_ReturnsNull()
+    {
+        var carArray = new CarArray(0);
+        var minRangeCar = carArray.FindCarWithMinRange();
+        Assert.IsNull(minRangeCar);
+    }
+    [TestMethod]
+    public void GetCollectionCount_ReturnsCorrectCount()
+    {
+        int initialCount = CarArray.GetCollectionCount();
+        var carArray1 = new CarArray(2, 5, 10, 40, 60);
+        var carArray2 = new CarArray(3, 5, 10, 40, 60);
+        Assert.AreEqual(initialCount + 2, CarArray.GetCollectionCount());
+    }
+    [TestMethod]
+    public void Constructor_WithParameters_CreatesArrayWithCorrectSize()
+    {
+        var carArray = new CarArray(5, 5, 10, 40, 60);
+        Assert.AreEqual(5, carArray.Length);
+    }
+    [TestMethod]
+    public void Constructor_Copy_CreatesDeepCopy()
+    {
+        var originalArray = new CarArray(2, 5, 10, 40, 60);
+        var copiedArray = new CarArray(originalArray);
+
+        // Изменяем элемент в оригинальном массиве
+        originalArray[0] = new Car(15, 75);
+
+        // Проверяем, что скопированный массив не изменился
+        Assert.AreNotEqual(originalArray[0], copiedArray[0]);
+    }
 
     [TestMethod]
     public void TestParameterizedConstructor()

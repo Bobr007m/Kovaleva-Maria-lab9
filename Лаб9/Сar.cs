@@ -130,7 +130,7 @@ namespace Лаб9
 
         public static Car operator +(double fuel, Car car)
         {
-            car.FuelVolume += fuel; // Добавляем топливо (коммутативность)
+            car.FuelVolume += fuel; // Добавляем топливо 
             return car;
         }
 
@@ -155,18 +155,6 @@ namespace Лаб9
             if (obj is Car car)
                 return this == car;
             return false;
-        }
-
-        // Переопределение метода GetHashCode
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hash = 17;
-                hash = hash * 23 + fuelFlow.GetHashCode();
-                hash = hash * 23 + fuelVolume.GetHashCode();
-                return hash;
-            }
         }
     }
 }
